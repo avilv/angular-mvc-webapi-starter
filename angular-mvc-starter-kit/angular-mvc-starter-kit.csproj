@@ -115,6 +115,7 @@
     <Compile Include="ApiControllers\DefaultController.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="ApiControllers\CatchAllController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

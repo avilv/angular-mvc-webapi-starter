@@ -13,9 +13,9 @@ namespace angular_mvc_starter_kit.ApiControllers
         
         [Route("text")]
         [HttpGet]
-        public string Text()
-        {
-            return "Got some text!";
+        public IHttpActionResult Text()
+        { 
+            return Ok("Got some text!");
         }
 
         
