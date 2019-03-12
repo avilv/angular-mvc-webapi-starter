@@ -1,0 +1,19 @@
+﻿@using System.Text.RegularExpressions
+@{
+    var baseTagRegex = "<base.*?href=[\'\"](.*?)[\'\"].*?[\\/>]";
+
+
+    var html = File.ReadAllText(Server.MapPath("~/app/index.html"));
+    var foundMatch = false;
+    html = Regex.Replace(html, baseTagRegex, (m) =>
+    {
+        foundMatch = true;
+        return Url.Content("~/");
+    });
+
+    if (!foundMatch)
+    {
+        throw new Exception($"Cannot find <base href=''/> tag in app/index.html");
+    }
+}
+@Html.Raw(html);

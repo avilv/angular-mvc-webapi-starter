@@ -101,12 +101,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\favicon.ico" />
+    <Content Include="app\index.html" />
+    <Content Include="app\main.js" />
+    <Content Include="app\polyfills.js" />
+    <Content Include="app\runtime.js" />
+    <Content Include="app\styles.js" />
+    <Content Include="app\vendor.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiControllers\DefaultController.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -114,7 +123,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
+    <Content Include="app\main.js.map" />
+    <Content Include="app\polyfills.js.map" />
+    <Content Include="app\runtime.js.map" />
+    <Content Include="app\styles.js.map" />
+    <Content Include="app\vendor.js.map" />
     <None Include="packages.config" />
+    <Content Include="Views\Default\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -124,7 +139,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup>
@@ -142,7 +156,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>26143</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:26143/</IISUrl>
+          <IISUrl>http://localhost:26143/MyVirt</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:26143/MyVirt</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
