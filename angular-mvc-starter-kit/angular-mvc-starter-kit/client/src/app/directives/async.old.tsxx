@@ -1,0 +1,410 @@
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+
+import { Directive, DoCheck, Host, Input, TemplateRef, ViewContainerRef, EmbeddedViewRef } from '@angular/core';
+import { Observable, throwError } from 'rxjs';
+import { catchError, take } from 'rxjs/operators';
+
+
+
+
+export class AwaitView {
+    private _created = false;
+
+    constructor(
+        private _viewContainerRef: ViewContainerRef, private _templateRef: TemplateRef<Object>) { }
+
+    create(): void {
+        this._created = true;
+        this._viewContainerRef.createEmbeddedView(this._templateRef);
+    }
+
+    destroy(): void {
+        this._created = false;
+        this._viewContainerRef.clear();
+    }
+
+    enforceState(created: boolean) {
+        if (created && !this._created) {
+            this.create();
+        } else if (!created && this._created) {
+            this.destroy();
+        }
+    }
+}
+
+export class NgAsyncAwaitContext<TValue, TError> {
+    constructor(public _request: AsyncRequest<TValue, TError>) { }
+
+    get result(): TValue | TError {
+        switch (this._request.state) {
+            case "success":
+                return this._request.value;
+            case "error":
+                return this._request.value;
+        }
+        return null;
+    }
+
+}
+
+/**
+ * @ngModule CommonModule
+ *
+ * @description A structural directive that adds or removes templates (displaying or hiding views)
+ * when the next match expression matches the switch expression.
+ *
+ * The `[ngSwitch]` directive on a container specifies an expression to match against.
+ * The expressions to match are provided by `ngSwitchCase` directives on views within the container.
+ * - Every view that matches is rendered.
+ * - If there are no matches, a view with the `ngSwitchDefault` directive is rendered.
+ * - Elements within the `[NgSwitch]` statement but outside of any `NgSwitchCase`
+ * or `ngSwitchDefault` directive are preserved at the location.
+ *
+ * @usageNotes
+ * Define a container element for the directive, and specify the switch expression
+ * to match against as an attribute:
+ *
+ * ```
+ * <container-element [ngSwitch]="switch_expression">
+ * ```
+ *
+ * Within the container, `*ngSwitchCase` statements specify the match expressions
+ * as attributes. Include `*ngSwitchDefault` as the final case.
+ *
+ * ```
+ * <container-element [ngSwitch]="switch_expression">
+ *    <some-element *ngSwitchCase="match_expression_1">...</some-element>
+ * ...
+ *    <some-element *ngSwitchDefault>...</some-element>
+ * </container-element>
+ * ```
+ *
+ * ### Usage Examples
+ *
+ * The following example shows how to use more than one case to display the same view:
+ *
+ * ```
+ * <container-element [ngSwitch]="switch_expression">
+ *   <!-- the same view can be shown in more than one case -->
+ *   <some-element *ngSwitchCase="match_expression_1">...</some-element>
+ *   <some-element *ngSwitchCase="match_expression_2">...</some-element>
+ *   <some-other-element *ngSwitchCase="match_expression_3">...</some-other-element>
+ *   <!--default case when there are no matches -->
+ *   <some-element *ngSwitchDefault>...</some-element>
+ * </container-element>
+ * ```
+ *
+ * The following example shows how cases can be nested:
+ * ```
+ * <container-element [ngSwitch]="switch_expression">
+ *       <some-element *ngSwitchCase="match_expression_1">...</some-element>
+ *       <some-element *ngSwitchCase="match_expression_2">...</some-element>
+ *       <some-other-element *ngSwitchCase="match_expression_3">...</some-other-element>
+ *       <ng-container *ngSwitchCase="match_expression_3">
+ *         <!-- use a ng-container to group multiple root nodes -->
+ *         <inner-element></inner-element>
+ *         <inner-other-element></inner-other-element>
+ *       </ng-container>
+ *       <some-element *ngSwitchDefault>...</some-element>
+ *     </container-element>
+ * ```
+ *
+ * @publicApi
+ * @see `NgSwitchCase`
+ * @see `NgSwitchDefault`
+ * @see [Stuctural Directives](guide/structural-directives)
+ *
+ */
+@Directive({ selector: '[ngAwait]' })
+export class NgAsyncAwait  {
+
+
+    constructor(private viewContainer: ViewContainerRef, private templateRef: TemplateRef<Object>) 
+    {
+
+      //  viewContainer.createEmbeddedView(templateRef,{ $implicit:1})
+       // ngAsyncAwait._addSuccess(new AwaitView(viewContainer, templateRef));
+    }
+
+    ngDoCheck(): void {
+
+       // let ref = this._viewContainer.createEmbeddedView(this._template, new NgAsyncAwaitContext<TValue, TError>(this._ngAwait));
+    }
+    // // TODO(issue/24571): remove '!'.
+    // private _loadingViews !: AwaitView[];
+    // private _successViews !: AwaitView[];
+    // private _failureViews !: AwaitView[];
+    // private _defaultUsed = false;
+    // private _caseCount = 0;
+    // private _lastCaseCheckIndex = 0;
+    // private _lastCasesMatched = false;
+    // private _ngAwait: any;
+
+    // constructor(private _viewContainer: ViewContainerRef, private _template: TemplateRef<NgAsyncAwaitContext<TValue, TError>>) {
+
+    // }
+
+
+    // @Input()
+    // set ngAwait(value: Observable<any>) {
+    //     //this._ngAwait = CAsyncRequest(value);
+    //      CAsyncRequest(value).subscribe(x => {
+    //             this._viewContainer.createEmbeddedView(this._template, new NgAsyncAwaitContext<TValue, {}>(x));
+    //      });
+
+        
+
+    //     for (let i = 0, ilen = this._viewContainer.length; i < ilen; i++) {
+    //         const viewRef = <EmbeddedViewRef<NgAsyncAwaitContext<TValue, TError>>>this._viewContainer.get(i);
+    //         //viewRef.context.$result = this._ngAwait;
+    //         //viewRef.context.$result = "test";
+    //         //viewRef.context.ngForOf = this._ngForOf;
+    //     }
+    // }
+    // @Input()
+    // set ngAwaitTemplate(value: TemplateRef<NgAsyncAwaitContext<TValue, TError>>) {
+    //     this._template = value;
+    // }
+
+    // /** @internal */
+    // _addSuccess(view: AwaitView) {
+    //     if (!this._successViews) {
+    //         this._successViews = [];
+    //     }
+    //     this._successViews.push(view);
+    // }
+
+    // /** @internal */
+    // _addFailure(view: AwaitView) {
+    //     if (!this._failureViews) {
+    //         this._failureViews = [];
+    //     }
+    //     this._failureViews.push(view);
+    // }
+
+    // /** @internal */
+    // _addLoading(view: AwaitView) {
+    //     if (!this._loadingViews) {
+    //         this._loadingViews = [];
+    //     }
+    //     this._loadingViews.push(view);
+    // }
+
+    // /** @internal */
+    // _matchCase(value: any): boolean {
+    //     const matched = value == this._ngAwait;
+    //     this._lastCasesMatched = this._lastCasesMatched || matched;
+    //     this._lastCaseCheckIndex++;
+    //     if (this._lastCaseCheckIndex === this._caseCount) {
+    //         this._updateDefaultCases(!this._lastCasesMatched);
+    //         this._lastCaseCheckIndex = 0;
+    //         this._lastCasesMatched = false;
+    //     }
+    //     return matched;
+    // }
+
+    // private _updateDefaultCases(useDefault: boolean) {
+    //     if (this._loadingViews && useDefault !== this._defaultUsed) {
+    //         this._defaultUsed = useDefault;
+    //         for (let i = 0; i < this._loadingViews.length; i++) {
+    //             const defaultView = this._loadingViews[i];
+    //             defaultView.enforceState(useDefault);
+    //         }
+    //     }
+    // }
+}
+
+/**
+ * @ngModule CommonModule
+ *
+ * @description
+ * Provides a switch case expression to match against an enclosing `ngSwitch` expression.
+ * When the expressions match, the given `NgSwitchCase` template is rendered.
+ * If multiple match expressions match the switch expression value, all of them are displayed.
+ *
+ * @usageNotes
+ *
+ * Within a switch container, `*ngSwitchCase` statements specify the match expressions
+ * as attributes. Include `*ngSwitchDefault` as the final case.
+ *
+ * ```
+ * <container-element [ngSwitch]="switch_expression">
+ *   <some-element *ngSwitchCase="match_expression_1">...</some-element>
+ *   ...
+ *   <some-element *ngSwitchDefault>...</some-element>
+ * </container-element>
+ * ```
+ *
+ * Each switch-case statement contains an in-line HTML template or template reference
+ * that defines the subtree to be selected if the value of the match expression
+ * matches the value of the switch expression.
+ *
+ * Unlike JavaScript, which uses strict equality, Angular uses loose equality.
+ * This means that the empty string, `""` matches 0.
+ *
+ * @publicApi
+ * @see `NgSwitch`
+ * @see `NgSwitchDefault`
+ *
+ 
+// @Directive({ selector: '[ngAwaitSuccess]' })
+// export class NgSwitchCase implements DoCheck {
+//     private _view: AwaitView;
+//     /**
+//      * Stores the HTML template to be selected on match.
+//      */
+//     @Input()
+//     ngSwitchCase: any;
+
+//     constructor(
+//         viewContainer: ViewContainerRef, templateRef: TemplateRef<Object>,
+//         @Host() private ngSwitch: NgSwitch) {
+//         ngSwitch._addCase();
+//         this._view = new AwaitView(viewContainer, templateRef);
+//     }
+
+//     /**
+//      * Performs case matching. For internal use only.
+//      */
+//     ngDoCheck() { this._view.enforceState(this.ngSwitch._matchCase(this.ngSwitchCase)); }
+// }
+
+/**
+ * @ngModule CommonModule
+ *
+ * @description
+ *
+ * Creates a view that is rendered when no `NgSwitchCase` expressions
+ * match the `NgSwitch` expression.
+ * This statement should be the final case in an `NgSwitch`.
+ *
+ * @publicApi
+ * @see `NgSwitch`
+ * @see `NgSwitchCase`
+ *
+ */
+
+ export class NgAwaitContext {
+    constructor(
+        public $implicit: any) {}
+
+ }
+@Directive({ selector: '[ngAwaitSuccess]' })
+export class NgAwaitSuccess<TValue, TError> {
+    @Input()
+    set ngAwaitSuccess(context: any) {
+      this.context.$implicit = 1234;
+      this.context.ngAwaitSuccess = 4000;
+                         
+      this.updateView();
+    }
+    context: any = {};
+
+    constructor(private viewContainer: ViewContainerRef, private templateRef: TemplateRef<NgAwaitContext>
+        //, @Host() ngAsyncAwait: NgAsyncAwait<TValue, TError>) 
+    ) {
+
+      //  viewContainer.createEmbeddedView(templateRef,{ $implicit:1})
+       // ngAsyncAwait._addSuccess(new AwaitView(viewContainer, templateRef));
+    }
+
+    updateView() {
+        this.viewContainer.clear();
+        this.viewContainer.createEmbeddedView(this.templateRef, this.context);
+      }
+}
+
+@Directive({ selector: '[ngAwaitFailure]' })
+export class NgAwaitFailure<TValue, TError> {
+    @Input()
+    set ngAwaitFailure(context: any) {
+      this.context.$implicit = 4444;
+      this.context.ngAwaitSuccess = 44444;
+                         
+      this.updateView();
+    }
+    context: any = {};
+
+    constructor(private viewContainer: ViewContainerRef, 
+        private templateRef: TemplateRef<NgAwaitContext>,
+        @Host() ngAsyncAwait: NgAsyncAwait) 
+     {
+
+      //  viewContainer.createEmbeddedView(templateRef,{ $implicit:1})
+       // ngAsyncAwait._addSuccess(new AwaitView(viewContainer, templateRef));
+    }
+
+    updateView() {
+        this.viewContainer.clear();
+        this.viewContainer.createEmbeddedView(this.templateRef, this.context);
+      }
+}
+
+@Directive({ selector: '[ngAwaitLoading]' })
+export class NgAwaitLoading<TValue, TError> {
+    constructor(viewContainer: ViewContainerRef, templateRef: TemplateRef<Object>
+       // , @Host() ngAsyncAwait: NgAsyncAwait<TValue, TError>)
+     ) {
+        
+         viewContainer.createEmbeddedView(templateRef,{ $implicit:1})
+
+       // ngAsyncAwait._addSuccess(new AwaitView(viewContainer, templateRef));
+    }
+}
+
+
+
+
+
+const CAsyncRequest = <TValue, TError>(request: Observable<TValue>): Observable<AsyncRequest<TValue, TError>> => {
+
+    return new Observable(sub => {
+        sub.next(RequestLoading());
+        request
+            .pipe(
+                take(1),
+                catchError(err => {
+                    sub.next(RequestError(<TError>err));
+                    return throwError(err);
+                })
+            )
+            .subscribe(val => sub.next(RequestSuccess(val)));
+    });
+
+
+}
+
+
+
+type AsyncRequest<TValue, TError> = RequestLoading | RequestSuccess<TValue> | RequestError<TError>;
+
+
+interface RequestLoading {
+    state: "loading";
+}
+interface RequestSuccess<T> {
+    state: "success";
+    value: T;
+}
+
+interface RequestError<T> {
+    state: "error";
+    value: T;
+}
+const RequestLoading = (): RequestLoading => ({ state: "loading" });
+
+const RequestSuccess = <T>(value: T): RequestSuccess<T> => ({
+    state: "success",
+    value,
+})
+
+const RequestError = <T>(value: T): RequestError<T> => ({
+    state: "error",
+    value,
+})

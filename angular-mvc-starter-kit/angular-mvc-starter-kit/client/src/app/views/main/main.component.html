@@ -1,0 +1,44 @@
+<p>
+  main works!
+</p>
+<div> 
+  <button (click)="btnClick()">do it</button>
+  <!--
+    <ng-container [ngAwait]="text$">
+      <div>some stuff..</div>
+         <ng-container *ngAwaitLoading>loading..</ng-container>   
+        <ng-container *ngAwaitSuccess="let data"> data result: {{ data }}</ng-container> 
+       <ng-container *ngAwaitFailure="let error"> error has occured: {{ error.message }}</ng-container>
+    </ng-container>
+-->
+    <span *ngIf="(httpQuery$ | async) as response">
+      <ng-container [ngSwitch]="response.state">
+        <ng-container *ngSwitchCase="'loading'">loading data...</ng-container>
+        <ng-container *ngSwitchCase="'success'">{{response.value}}</ng-container>
+        <ng-container *ngSwitchCase="'error'">{{response.value}}</ng-container>
+        
+      </ng-container>
+    </span>
+
+    
+  <!-- <ng-container [ngAwait]="text$">
+      <ng-container *ngAwaitLoading>loading..</ng-container>  
+    <ng-container *ngAwaitSuccess> data result: {{ data }}</ng-container> 
+    <ng-container *ngAwaitFailure="let error"> error has occured: {{ error.message }}</ng-container>
+  </ng-container> -->
+
+  
+     
+   
+
+  <!-- <span *ngIf="(text$ | async) as text2">
+    <ng-container [ngSwitch]="true">
+      <ng-container *ngSwitchCase="text.loading">loading data...</ng-container>
+      <ng-container *ngSwitchCase="text.success">{{text.value}}</ng-container>
+      <ng-container *ngSwitchDefault>{{text.value.message}}</ng-container>
+    </ng-container>
+     
+  </span>
+
+  <ng-template #loadingText>loading...</ng-template> -->
+</div>
