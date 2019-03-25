@@ -11,8 +11,8 @@ namespace angular_mvc_starter_kit
     {
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
-            // Web API routes
+          
+            
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
@@ -25,7 +25,10 @@ namespace angular_mvc_starter_kit
 
 #if DEBUG
             config.EnableCors(new EnableCorsAttribute("*", "*", "*", "Content-Disposition") { SupportsCredentials = true });
-#endif
+            config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
+#else
+            config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Never;
+#endif 
         }
     }
 }

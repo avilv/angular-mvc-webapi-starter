@@ -13,12 +13,19 @@ namespace angular_mvc_starter_kit.ApiControllers
     [RoutePrefix("api")]
     public class DefaultController : ApiController
     {
-        
+
         [Route("text")]
         [HttpGet]
         public async Task<IHttpActionResult> Text()
-        { 
-            return Ok("test");
+        {
+            return Ok(new { Data = "test" });
+        }
+
+        [Route("testError")]
+        [HttpGet]
+        public async Task<IHttpActionResult> TestError()
+        {
+            throw new Exception("an exception occured.");
         }
     }
 }
