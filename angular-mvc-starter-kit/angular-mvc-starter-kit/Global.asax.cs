@@ -42,7 +42,7 @@ namespace angular_mvc_starter_kit
                 TypeNameHandling = TypeNameHandling.None,
                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
             };
-            formatter.SerializerSettings.Converters.Add(new StringEnumConverter { CamelCaseText = true });
+            formatter.SerializerSettings.Converters.Add(new StringEnumConverter { NamingStrategy = new CamelCaseNamingStrategy() });
         }
 
     }
