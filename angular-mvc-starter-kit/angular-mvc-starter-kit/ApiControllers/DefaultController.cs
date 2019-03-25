@@ -11,7 +11,6 @@ using System.Web.Http.Cors;
 namespace angular_mvc_starter_kit.ApiControllers
 {
     [RoutePrefix("api")]
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class DefaultController : ApiController
     {
         
@@ -21,7 +20,5 @@ namespace angular_mvc_starter_kit.ApiControllers
         { 
             return Ok("test");
         }
-
-        
     }
 }
