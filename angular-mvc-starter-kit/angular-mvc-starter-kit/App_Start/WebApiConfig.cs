@@ -1,5 +1,4 @@
-﻿using angular_mvc_starter_kit.App_Start;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -20,7 +19,6 @@ namespace angular_mvc_starter_kit
                 routeTemplate: "api/{*catchall}",
                defaults: new { controller = "CatchAll" });
 
-            config.Filters.Add(new JsonContentTypeFilterAttribute());
             config.Filters.Add(new AuthorizeAttribute());
 
 #if DEBUG

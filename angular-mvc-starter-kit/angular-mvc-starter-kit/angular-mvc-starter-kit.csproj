@@ -120,7 +120,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiControllers\DefaultController.cs" />
-    <Compile Include="App_Start\JsonContentTypeFilterAttribute.cs" />
     <Compile Include="App_Start\MvcConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="ApiControllers\CatchAllController.cs" />
